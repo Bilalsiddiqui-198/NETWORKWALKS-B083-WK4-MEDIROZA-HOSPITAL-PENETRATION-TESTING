@@ -52,7 +52,7 @@ A black-box web application penetration test was conducted against Mediroza Gene
 The assessment uncovered a severe, chained exploitation path:
 
 - An **authentication bypass via SQL Injection** allowed unauthorized access to the internal Patient Portal, exposing confidential patient lab reports.
-- **Metadata inspection** of the decrypted PDF reports revealed a reference to an exposed legacy server directory (`/old/`).
+- **Metadata inspection** of the decrypted PDF reports revealed an internal comment referencing a database backup that had been moved to a legacy server directory (`/old/`) during a past site migration.
 - This exposed directory contained a full SQL database backup (`mediroza_db_backup_2019.sql`), directly leaking **30 staff salary records** and **10 shareholder equity records**.
 
 ### 1.1 Summary of Assessment Findings
@@ -62,7 +62,7 @@ The assessment uncovered a severe, chained exploitation path:
 | M1: Initial Access | SQL Injection → Authentication Bypass | 🔴 **Critical** | Full bypass of authentication; access to restricted patient portal and lab reports |
 | M2: Data Extraction | Weak/Crackable PDF Password Protection | 🟠 **High** | Offline recovery of encrypted PDF lab reports, exposing protected health information |
 | M3: Data Exposure | Publicly Accessible SQL Database Backup (`/old/`) | 🔴 **Critical** | Direct leak of 30 staff salaries and 10 shareholder equity details |
-| M3: Information Leak | Sensitive Metadata in Patient PDFs | 🟡 **Medium** | Exposed internal software version and legacy directory references, aiding further compromise |
+| M3: Information Leak | Sensitive Comment in Patient PDF Metadata | 🟡 **Medium** | Exposed internal migration notes referencing a legacy backup directory, aiding further compromise |
 
 ---
 
